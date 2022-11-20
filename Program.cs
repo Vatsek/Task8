@@ -9,12 +9,47 @@
 // - вывести статистику чисел (в любом красивом виде)
 // - любые дополнительные по желанию
 
-// int size = ConvInt("Введите длину массива: ");
-// int[] numbers = new int[size];
+Console.WriteLine("Введите числа через пробел");
+string text = Console.ReadLine();
 
-int[] numbers = { 1, 2, 3, 4, 5, 6, 7 };
+int[] numbers = SetNumbers(text, ' ');
 
 WriteArray(numbers);
+
+
+int[] SetNumbers(string inputText, char separator)
+{
+    int[] numbers = new int[1];
+    int i = 0;
+
+    string element = string.Empty;
+    int number = 0;
+    while (inputText[i] == separator)
+    {
+        i++;
+    }
+    for (; i < inputText.Length; i++)
+    {
+        WriteArray(numbers);
+        if (inputText[i] == separator)
+        {
+            if(numbers.Length == 1)
+            {
+                numbers[0] = number;
+                element = string.Empty;
+                continue;
+            }
+            number = Convert.ToInt32(element);
+            numbers = AddNumbers2(numbers, number);
+            element = string.Empty;
+        }
+        else
+            element += inputText[i];
+            Console.WriteLine(element);
+    }
+    return numbers;
+
+}
 
 numbers = AddNumbers(numbers);
 
@@ -111,5 +146,22 @@ void Sum(int[] sumArray)
     {
         sum += sumArray[i];
     }
-Console.WriteLine($"Сумма элементов в массиве: {sum}");
+    Console.WriteLine($"Сумма элементов в массиве: {sum}");
+}
+
+
+
+int[] AddNumbers2(int[] arrayToAdd, int addNumber)
+{
+    int size = arrayToAdd.Length;
+
+    int[] addArray = new int[++size];
+
+    for (int i = 0; i < arrayToAdd.Length; i++)
+    {
+        addArray[i] = arrayToAdd[i];
+    }
+    addArray[addArray.Length - 1] = addNumber;
+
+    return addArray;
 }
